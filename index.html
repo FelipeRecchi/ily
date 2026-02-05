@@ -199,17 +199,13 @@ transition: opacity 1.5s ease;
 
     // Start floating hearts
     heartsContainer.style.display = "block";
-    heartInterval = setInterval(createHeart, 300);
+    setInterval(createHeart, 300);
 
-    // 3️⃣ After floating hearts start, reveal photo
+    // Show photo at the SAME TIME
+    photo.style.display = "block";
     setTimeout(() => {
-      clearInterval(heartInterval);
-
-      photo.style.display = "block";
-      setTimeout(() => {
-        photo.style.opacity = 1;
-      }, 100);
-    }, 1500);
+      photo.style.opacity = 1;
+    }, 100);
 
   }, 1200);
 }
