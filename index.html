@@ -124,10 +124,13 @@
   }
 
   img {
+   
     margin: 30px auto 0 auto;
     max-width: 600px;
     display: none;
     border-radius: 30px;
+     opacity: 0;
+transition: opacity 1.5s ease;
   }
 </style>
 
@@ -136,27 +139,10 @@
   <img id="photo" src="us.jpeg" alt="Us">
 
   <script>
-const heartsContainer = document.querySelector(".hearts");
-
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = 5 + Math.random() * 5 + "s";
-  heart.style.opacity = Math.random();
-
-  heartsContainer.appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 10000);
-}, 400);
-
-    
-    /*copiei daqui pra cima*/
+  const heartsContainer = document.querySelector(".hearts");
   const redBtn = document.getElementById("yesRed");
 
+  // Make red button escape
   redBtn.addEventListener("mouseover", () => {
     const x = Math.random() * (window.innerWidth - 150);
     const y = Math.random() * (window.innerHeight - 100);
@@ -164,9 +150,43 @@ setInterval(() => {
     redBtn.style.top = y + "px";
   });
 
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+    heart.style.opacity = Math.random();
+
+    heartsContainer.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 10000);
+  }
+
+  let heartInterval;
+
   function showLove() {
-    document.querySelector("h1").innerText = "Sabia 😌❤️ (I knew it already)";
-    document.getElementById("photo").style.display = "block";
+    // Change title
+    document.querySelector("h1").innerText =
+      "Sabia 😌❤️";
+
+    // Start hearts
+    heartInterval = setInterval(createHeart, 300);
+
+    // After 2 seconds: stop hearts + show image
+    setTimeout(() => {
+      clearInterval(heartInterval);
+
+      const photo = document.getElementById("photo");
+      photo.style.display = "block";
+
+      // fade in
+      setTimeout(() => {
+        photo.style.opacity = 1;
+      }, 100);
+    }, 2000);
   }
 </script>
 
